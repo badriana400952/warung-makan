@@ -1,7 +1,5 @@
-import { Html, Head, Main, NextScript } from "next/document";
 import clsx from "clsx";
-
-import { fontSans } from "@/config/fonts";
+import { Head, Html, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (

@@ -1,14 +1,13 @@
-import { Button } from "@heroui/button";
 import { Card, CardBody } from "@heroui/react";
 import Image from "next/image";
 
-import DefaultLayout from "@/layouts/default";
-import Menus from "./hooks/menu";
-import MenuBast from "@/components/menuBast";
 import CategoryMenu from "@/components/CategoryMenu";
+import MenuBast from "@/components/menuBast";
+import MenuMobile from "@/components/menuMobile";
 import FoodCard from "@/components/menuRegular";
 import Promo from "@/components/promo";
-import MenuMobile from "@/components/menuMobile";
+import DefaultLayout from "@/layouts/default";
+import Menus from "./hooks/menu";
 
 export default function IndexPage() {
   return (

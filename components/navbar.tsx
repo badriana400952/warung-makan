@@ -1,12 +1,12 @@
-import React from "react";
 import {
+  Button,
   Navbar as HeroNavbar,
+  Link,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
-  Button,
 } from "@heroui/react";
+import React from "react";
 
 export const Navbar: React.FC = () => {
   const menuItems = [
@@ -27,6 +27,7 @@ export const Navbar: React.FC = () => {
       href: "#contact",
     },
   ];
+
   return (
     <HeroNavbar
       isBordered
