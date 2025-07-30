@@ -7,7 +7,6 @@ import MenuMobile from "@/components/menuMobile";
 import FoodCard from "@/components/menuRegular";
 import Promo from "@/components/promo";
 import DefaultLayout from "@/layouts/default";
-import Menus from "./hooks/menu";
 
 export default function IndexPage() {
   return (
@@ -141,7 +140,7 @@ export default function IndexPage() {
 
       <section className="mt-12" id="regular-menu">
         <div className="container  max-w-7xl px-6 ">
-          <Menus />
+          {/* <Menus /> */}
           <FoodCard />
         </div>
       </section>
