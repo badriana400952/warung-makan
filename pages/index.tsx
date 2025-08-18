@@ -7,8 +7,11 @@ import MenuMobile from "@/components/menuMobile";
 import FoodCard from "@/components/menuRegular";
 import Promo from "@/components/promo";
 import DefaultLayout from "@/layouts/default";
-
+import { signIn, signOut, useSession } from "next-auth/react";
 export default function IndexPage() {
+    const { data: session  } = useSession();
+    
+  // console.log(session.user?.name ?? "");
   return (
     <DefaultLayout>
       <section className="w-full bg-[#ffefe6] py-10 md:py-20" id="home">

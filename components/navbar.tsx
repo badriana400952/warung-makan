@@ -6,9 +6,12 @@ import {
   NavbarContent,
   NavbarItem,
 } from "@heroui/react";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import React from "react";
 
 export const Navbar: React.FC = () => {
+  const { data: session } = useSession()
   const menuItems = [
     {
       name: "Home",
@@ -27,6 +30,7 @@ export const Navbar: React.FC = () => {
       href: "#contact",
     },
   ];
+  const roiter = useRouter();
 
   return (
     <HeroNavbar
@@ -59,14 +63,42 @@ export const Navbar: React.FC = () => {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <NavbarItem>
-          <Button
-            className="text-orange-600 border-orange-500 hover:bg-orange-500 hover:text-white transition rounded-3xl px-6"
-            color="warning"
-            variant="flat"
-          >
-            Order Now
-          </Button>
+        <NavbarItem className="flex gap-4 justify-center items-end">
+          {!session?.user && (
+            <div className="flex gap-4 justify-center items-end">
+              <Button
+                className="text-orange-600 border-orange-500 hover:bg-orange-500 hover:text-white transition rounded-3xl px-6"
+                color="warning"
+                variant="flat"
+              >
+                Order Now
+              </Button>
+            </div>
+          )}
+          {session?.user && (
+            <div className="flex gap-4 justify-center items-end">
+              <Button
+                className="text-orange-600 border-orange-500 hover:bg-orange-500 hover:text-white transition rounded-3xl px-6"
+                color="warning"
+                variant="flat"
+                onPress={() => roiter.push("/produk")}
+              >
+                Tambah Produk
+              </Button>
+
+              <Button
+                className="text-orange-600 border-orange-500 hover:bg-orange-500 hover:text-white transition rounded-3xl px-6"
+                color="warning"
+                variant="flat"
+                onPress={() => signOut({ callbackUrl: "/login" })}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="24" height="24" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M14 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2" /><path d="M9 12h12l-3-3m0 6l3-3" /></g></svg>
+              </Button>
+            </div>
+          )
+
+          }
+
         </NavbarItem>
       </NavbarContent>
     </HeroNavbar>

@@ -1,15 +1,29 @@
 module.exports = {
-    extends: ['next', 'eslint:recommended'],
-    rules: {
-        'react/jsx-sort-props': 'off',
-        'unused-imports/no-unused-imports': 'off',
-        'linebreak-style': 'off',
-        'import/order': [
-            'warn',
-            {
-                groups: ['builtin', 'external', 'internal'],
-                'newlines-between': 'always',
-            },
-        ],
+  root: true,
+  extends: [
+    'next',
+    'eslint:recommended',
+    'next/core-web-vitals',
+  ],
+  rules: {
+    'react/jsx-sort-props': 'off',
+    'unused-imports/no-unused-imports': 'off',
+    'linebreak-style': 'off',
+    'prettier/prettier': 'off', // Matikan Prettier di ESLint
+    'import/order': [
+      'warn',
+      {
+        groups: ['builtin', 'external', 'internal'],
+        'newlines-between': 'always',
+      },
+    ],
+  },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
+      rules: {
+        'prettier/prettier': 'off', // Pastikan di semua file dimatikan
+      },
     },
+  ],
 };

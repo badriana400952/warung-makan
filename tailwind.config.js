@@ -13,6 +13,9 @@ const config = {
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'],
         mono: ["var(--font-mono)"],
+        animation: {
+          'spin-slow': 'spin 3s linear infinite',
+        },
       },
       container: {
         center: true,
