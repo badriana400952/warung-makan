@@ -4,10 +4,22 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     try {
-      const result = await pool.query("SELECT * FROM produk");
+      const result = await pool.query(`
+        SELECT 
+         produk.id, 
+         produk.nama_produk, 
+         produk.produk_khas, 
+         produk.harga, 
+         produk.image, 
+         COALESCE(SUM(penjualan.jumlah), 0) AS total_terjual ,
+         MAX(penjualan.id_penjualan) AS id_penjualan
+        FROM produk 
+        LEFT JOIN penjualan ON penjualan.id_produk = produk.id 
+        GROUP BY produk.id, produk.nama_produk, produk.produk_khas, produk.harga, produk.image 
+        ORDER BY produk.id `);
       res.status(200).json(result.rows);
-    } catch (error) {
-      res.status(500).json({ message: "Internal Server Error" });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
     }
   } else if (req.method === "POST") {
     try {
@@ -20,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } catch (error) {
       res.status(500).json({ message: "Internal Server Error" });
     }
-  }   else {
+  } else {
     res.status(500).json({ message: "Internal Server Error" });
   }
 }

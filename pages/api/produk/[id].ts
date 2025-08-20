@@ -3,7 +3,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
-  console.log("ini id", id);
+  const {id_penjualan} = req.body;
+ 
   if (req.method === "GET") {
     try {
       const result = await pool.query("SELECT * FROM produk WHERE id=$1", [id]);
@@ -26,6 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   } else if (req.method === "DELETE") {
     try {
+            await pool.query("DELETE FROM penjualan WHERE id_penjualan=$1", [id_penjualan]);
       const result = await pool.query("DELETE FROM produk WHERE id=$1", [id]);
       res.status(200).json(result.rows[0]);
     } catch (error) {

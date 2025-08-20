@@ -22,6 +22,8 @@ interface produk {
   produk_khas: string,
   harga: number,
   image: string
+  total_terjual?: number
+  id_penjualan?: number
 }
 export default function FoodCard() {
   const [produk, setProduk] = useState<produk[]>([]);
@@ -56,7 +58,7 @@ export default function FoodCard() {
   ];
 
   const handleDetail = async (id?: number) => {
-    console.log(id, "id")
+
     try {
       const response = await axios.get(`/api/produk/${id}`);
       setEditProduk(response.data);
@@ -87,9 +89,13 @@ export default function FoodCard() {
       })
     }
   }
-  const handleDelete = async (id?: number) => {
+  const handleDelete = async (id?: number, id_penjualan?: number) => {
     try {
-      await axios.delete(`/api/produk/${id}`)
+      await axios.delete(`/api/produk/${id}`, {
+        data: {
+          id_penjualan: id_penjualan
+        }
+      })
       handleGet()
       SuccessAlert({
         title: "Success",
@@ -97,18 +103,18 @@ export default function FoodCard() {
       })
     } catch (error) {
       if (error instanceof Error) {
-      SuccessAlert({
-        title: "Error",
-        message: error.message,
-      })
-    }
+        SuccessAlert({
+          title: "Error",
+          message: error.message,
+        })
+      }
     }
   }
   return (
     <>
 
       <div className="py-10 px-4 sm:px-6 lg:px-10">
-<div className="flex justify-center gap-8  flex-wrap">
+        <div className="flex justify-center gap-8  flex-wrap">
           {produk.map((menu, index) => (
             <div
               key={index}
@@ -131,7 +137,7 @@ export default function FoodCard() {
                             if (item.key === "edit") {
                               onOpen()
                             } else if (item.key === "delete") {
-                              handleDelete(menu?.id)
+                              handleDelete(menu?.id, menu?.id_penjualan)
                             }
                           }}
                         >
@@ -146,7 +152,7 @@ export default function FoodCard() {
               <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden -mt-16 mb-4">
                 {menu.image && (
                   <Image
-                    src="https://res.cloudinary.com/doykilt63/image/upload/c_thumb,w_200,g_face/v1755407909/a_ojgyw6.png"
+                    src={menu.image}
                     alt={menu.nama_produk}
                     width={128}
                     height={128}
@@ -169,7 +175,7 @@ export default function FoodCard() {
                 {[...Array(5)].map((_, i) => (
                   <StarIcon key={i} />
                 ))}
-                <span className="text-gray-500 text-xs sm:text-sm ml-1">(1400) Terpesan</span>
+                <span className="text-gray-500 text-xs sm:text-sm ml-1">{menu.total_terjual} Terpesan</span>
               </div>
 
               {/* Harga dan Tombol */}
